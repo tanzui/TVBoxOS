@@ -740,12 +740,12 @@ public class SourceViewModel extends ViewModel {
                     try {
                     	String json = sp.playerContent(playFlag, url, ApiConfig.get().getVipParseFlags());
                         JSONObject result = new JSONObject(json);
-                        PlayFragment.playUrl = result.getString("url");
                         result.put("key", url);
                         result.put("proKey", progressKey);
                         result.put("subtKey", subtitleKey);
                         if (!result.has("flag"))
                             result.put("flag", playFlag);
+                        PlayFragment.playUrl = result.getString("url");
                         playResult.postValue(result);
                     } catch (Throwable th) {
                         th.printStackTrace();
@@ -769,6 +769,7 @@ public class SourceViewModel extends ViewModel {
                 result.put("subtKey", subtitleKey);
                 result.put("playUrl", playUrl);
                 result.put("flag", playFlag);
+                PlayFragment.playUrl = result.getString("url");
                 playResult.postValue(result);
             } catch (Throwable th) {
                 th.printStackTrace();
@@ -804,6 +805,7 @@ public class SourceViewModel extends ViewModel {
                             result.put("subtKey", subtitleKey);
                             if (!result.has("flag"))
                                 result.put("flag", playFlag);
+                            PlayFragment.playUrl = result.getString("url");
                             playResult.postValue(result);
                         } catch (Throwable th) {
                             th.printStackTrace();
