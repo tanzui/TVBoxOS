@@ -3,6 +3,8 @@ package com.github.tvbox.osc.ui.fragment;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
@@ -113,6 +115,9 @@ import xyz.doikki.videoplayer.player.AbstractPlayer;
 import xyz.doikki.videoplayer.player.ProgressManager;
 
 public class PlayFragment extends BaseLazyFragment {
+
+    public static String playUrl = null;
+
     private MyVideoView mVideoView;
     private TextView mPlayLoadTip;
     private ImageView mPlayLoadErr;
@@ -233,6 +238,12 @@ public class PlayFragment extends BaseLazyFragment {
             public void replay(boolean replay) {
                 autoRetryCount = 0;
                 play(replay);
+            }
+
+            @Override
+            public void copyurl() {
+                autoRetryCount = 0;
+                copyplayurl();
             }
 
             @Override
@@ -945,6 +956,21 @@ public class PlayFragment extends BaseLazyFragment {
             return;
         }
         sourceViewModel.getPlay(sourceKey, mVodInfo.playFlag, progressKey, vs.url, subtitleCacheKey);
+    }
+
+    public void copyplayurl() {
+        if(PlayFragment.playUrl != null)
+        {
+            ClipboardManager manager = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clipData = ClipData.newPlainText(null, PlayFragment.playUrl);
+            manager.setPrimaryClip(clipData);
+            Toast.makeText(getContext(),"复制成功",Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            Toast.makeText(getContext(),"复制失败",Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private String playSubtitle;

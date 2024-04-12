@@ -123,6 +123,9 @@ public class VodController extends BaseController {
     TextView mPlayerBtn;
     TextView mPlayerIJKBtn;
     TextView mPlayerRetry;
+
+    TextView mCopyUrl;
+
     TextView mPlayrefresh;
     public TextView mPlayerTimeStartEndText;
     public TextView mPlayerTimeStartBtn;
@@ -187,6 +190,7 @@ public class VodController extends BaseController {
         mParseRoot = findViewById(R.id.parse_root);
         mGridView = findViewById(R.id.mGridView);
         mPlayerRetry = findViewById(R.id.play_retry);
+        mCopyUrl= findViewById(R.id.CopyUrl);
         mPlayrefresh = findViewById(R.id.play_refresh);
         mNextBtn = findViewById(R.id.play_next);
         mPreBtn = findViewById(R.id.play_pre);
@@ -315,6 +319,13 @@ public class VodController extends BaseController {
             @Override
             public void onClick(View v) {
                 listener.replay(true);
+                hideBottom();
+            }
+        });
+        mCopyUrl.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.copyurl();
                 hideBottom();
             }
         });
@@ -740,6 +751,8 @@ public class VodController extends BaseController {
         void updatePlayerCfg();
 
         void replay(boolean replay);
+
+        void copyurl();
 
         void errReplay();
 

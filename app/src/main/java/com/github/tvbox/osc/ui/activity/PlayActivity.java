@@ -3,6 +3,8 @@ package com.github.tvbox.osc.ui.activity;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -214,6 +216,12 @@ public class PlayActivity extends BaseActivity {
             public void replay(boolean replay) {
                 autoRetryCount = 0;
                 play(replay);
+            }
+
+            @Override
+            public void copyurl() {
+                autoRetryCount = 0;
+                copyplayurl();
             }
 
             @Override
@@ -912,6 +920,14 @@ public class PlayActivity extends BaseActivity {
             return;
         }
         sourceViewModel.getPlay(sourceKey, mVodInfo.playFlag, progressKey, vs.url, subtitleCacheKey);
+    }
+
+    public void copyplayurl() {
+        VodInfo.VodSeries vs = mVodInfo.seriesMap.get(mVodInfo.playFlag).get(mVodInfo.playIndex);
+        ClipboardManager manager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clipData = ClipData.newPlainText(null, vs.url);
+        manager.setPrimaryClip(clipData);
+        Toast.makeText(this,"复制成功",Toast.LENGTH_SHORT).show();
     }
 
     private String playSubtitle;
